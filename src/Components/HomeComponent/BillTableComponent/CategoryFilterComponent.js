@@ -1,11 +1,8 @@
-import { Tooltip } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+import { IconButton, Menu, MenuItem, Tooltip } from "@material-ui/core";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { selectCategory } from "../actions/BillActions";
+import { selectCategory } from "../../../actions/BillActions";
 
 const ITEM_HEIGHT = 48;
 

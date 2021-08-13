@@ -9,7 +9,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { addBill, editDone } from "../actions/BillActions";
+import { addBill, editDone } from "../../actions/BillActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {

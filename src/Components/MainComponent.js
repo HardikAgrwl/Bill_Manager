@@ -1,16 +1,12 @@
 import { Route } from "react-router-dom";
-import BillEnteryComponent from "./BillEntryComponent";
-import BillTableComponent from "./BillTableComponent";
-import BudgetComponent from "./BudgetEntryComponent";
 import ChartComponent from "./ChartComponent";
+import HomeComponent from "./HomeComponent/HomeComponent";
 
 const MainComponent = () => {
   return (
     <div>
       <Route path="/" exact>
-        <BillEnteryComponent />
-        <BudgetComponent />
-        <BillTableComponent />
+        <HomeComponent />
       </Route>
       <Route path="/chart" exact>
         <ChartComponent />

@@ -19,6 +19,7 @@ export const selectBill = (bills) => (dispatch) => {
   });
 };
 
+// Clear selected bills list
 export const clearSelection = () => (dispatch) => {
   dispatch({
     type: "CLEAR_SELECTED",
@@ -52,16 +53,16 @@ export const clearBudget = () => (dispatch) => {
   });
 };
 
-export const selectCategory = (category) => (dispatch) => {
-  dispatch({
-    type: "CATEGORY_SELECT",
-    payload: category,
-  });
-};
-
 export const editPayablesList = (list) => (dispatch) => {
   dispatch({
     type: "EDIT_PAYABLE",
     payload: list,
+  });
+};
+
+export const selectCategory = (category) => (dispatch) => {
+  dispatch({
+    type: "CATEGORY_SELECT",
+    payload: category,
   });
 };

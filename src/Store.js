@@ -2,6 +2,7 @@ import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { Bills } from "./Data/Bills";
 
+// Find unique categories from saved data
 let uniqueCategories = [...new Set(Bills.map((bill) => bill.category))];
 
 const initialState = {
@@ -24,54 +25,64 @@ function BillReducer(state, action) {
         ...state,
         bills: [...state.bills, { ...action.payload }],
       };
+
     case "SELECT_BILL":
       return {
         ...state,
         selected: [...action.payload],
       };
+
     case "CLEAR_SELECTED":
       return {
         ...state,
         selected: [],
       };
+
     case "EDIT_BILL":
       return {
         ...state,
         billBeingEdited: { ...action.payload },
         isEdit: true,
       };
+
     case "DONE_EDITING":
       return {
         ...state,
         isEdit: false,
         bills: [...action.payload],
       };
+
     case "DELETE_BILLS":
       return {
         ...state,
         bills: [...action.payload],
       };
+
     case "BUDGET_CHANGED":
       return {
         ...state,
         monthly_budget: action.payload,
       };
+
     case "CLEAR_BUDGET":
       return {
         ...state,
         monthly_budget: 0,
         payableBills: [],
       };
+
     case "CATEGORY_SELECT":
       return {
         ...state,
         selectedCategory: action.payload,
       };
+
     case "EDIT_PAYABLE":
       return {
         ...state,
         payableBills: [...action.payload],
       };
+
     default:
       return state;
   }

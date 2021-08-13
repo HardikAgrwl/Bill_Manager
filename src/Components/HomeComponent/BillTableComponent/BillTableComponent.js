@@ -27,7 +27,7 @@ import {
   deleteBills,
   editBill,
   selectBill,
-} from "../actions/BillActions";
+} from "../../../actions/BillActions";
 import CategoryFilterComponent from "./CategoryFilterComponent";
 
 function descendingComparator(a, b, orderBy) {

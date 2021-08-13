@@ -81,7 +81,10 @@ const useStyles = makeStyles((theme) =>
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
     },
-    Link: { textDecoration: "none" },
+    Link: {
+      textDecoration: "none",
+      color: "#45574a",
+    },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
@@ -153,7 +156,7 @@ export default function SideNavComponent() {
           </div>
           <Divider />
           <List>
-            <Link to="/">
+            <Link to="/" className={classes.Link}>
               <ListItem button>
                 <ListItemIcon>
                   <HomeRoundedIcon />
@@ -161,7 +164,7 @@ export default function SideNavComponent() {
                 <ListItemText primary="Bills" />
               </ListItem>
             </Link>
-            <Link to="/chart">
+            <Link to="/chart" className={classes.Link}>
               <ListItem button>
                 <ListItemIcon>
                   <ShowChartRoundedIcon />

@@ -9,7 +9,7 @@ import {
   clearBudget,
   deleteBills,
   editPayablesList,
-} from "../actions/BillActions";
+} from "../../actions/BillActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -106,23 +106,27 @@ function BudgetComponent({
           Submit
         </Button>
       </form>
-      <h3>
-        {`Monthly Budget : ${monthly_budget}`}{" "}
-        <span>
-          <Tooltip title="Pay">
-            <IconButton aria-label="pay" onClick={payHandler}>
-              <PaymentRoundedIcon />
-            </IconButton>
-          </Tooltip>
-        </span>{" "}
-        <span>
-          <Tooltip title="Cancel">
-            <IconButton aria-label="cancel" onClick={() => clearBudget()}>
-              <CancelRoundedIcon />
-            </IconButton>
-          </Tooltip>
-        </span>
-      </h3>
+      {monthly_budget > 0 ? (
+        <h3>
+          {`Money Left : ${monthly_budget}`}{" "}
+          <span>
+            <Tooltip title="Pay">
+              <IconButton aria-label="pay" onClick={payHandler}>
+                <PaymentRoundedIcon />
+              </IconButton>
+            </Tooltip>
+          </span>{" "}
+          <span>
+            <Tooltip title="Cancel">
+              <IconButton aria-label="cancel" onClick={() => clearBudget()}>
+                <CancelRoundedIcon />
+              </IconButton>
+            </Tooltip>
+          </span>
+        </h3>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
