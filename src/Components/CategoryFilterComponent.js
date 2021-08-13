@@ -1,3 +1,4 @@
+import { Tooltip } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -23,14 +24,16 @@ function CategoryFilter({ categories, selectCategory }) {
 
   return (
     <div>
-      <IconButton
-        aria-label="category-filter"
-        aria-controls="long-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <FilterListIcon />
-      </IconButton>
+      <Tooltip title="Category Filter">
+        <IconButton
+          aria-label="category-filter"
+          aria-controls="long-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <FilterListIcon />
+        </IconButton>
+      </Tooltip>
       <Menu
         id="long-menu"
         anchorEl={anchorEl}

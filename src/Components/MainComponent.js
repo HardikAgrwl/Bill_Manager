@@ -9,11 +9,11 @@ const MainComponent = () => {
     <div>
       <Route path="/" exact>
         <BillEnteryComponent />
+        <BudgetComponent />
         <BillTableComponent />
       </Route>
       <Route path="/chart" exact>
         <ChartComponent />
-        <BudgetComponent />
       </Route>
     </div>
   );

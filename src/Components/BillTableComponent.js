@@ -200,9 +200,7 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <CategoryFilterComponent />
-        </Tooltip>
+        <CategoryFilterComponent />
       )}
     </Toolbar>
   );
@@ -234,6 +232,9 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
+  payable: {
+    color: "green",
+  },
 }));
 
 const BillTableComponent = ({
@@ -244,6 +245,7 @@ const BillTableComponent = ({
   clearSelection,
   editBill,
   selectedCategory,
+  payableBills,
 }) => {
   const classes = useStyles();
   const [billList, setBillList] = useState(
@@ -357,6 +359,14 @@ const BillTableComponent = ({
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={bill.id}
+                      bgcolor={`${
+                        payableBills.includes(bill.id) ? "success.main" : ""
+                      }`}
+                      color={`${
+                        payableBills.includes(bill.id)
+                          ? "success.contrastText"
+                          : ""
+                      }`}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -412,6 +422,7 @@ const mapStateToProps = (state) => ({
   Bills: state.bills,
   selected: state.selected,
   selectedCategory: state.selectedCategory,
+  payableBills: state.payableBills,
 });
 
 export default connect(mapStateToProps, {

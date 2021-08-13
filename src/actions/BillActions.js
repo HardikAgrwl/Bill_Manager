@@ -46,9 +46,22 @@ export const changeBudget = (budget) => (dispatch) => {
   });
 };
 
+export const clearBudget = () => (dispatch) => {
+  dispatch({
+    type: "CLEAR_BUDGET",
+  });
+};
+
 export const selectCategory = (category) => (dispatch) => {
   dispatch({
     type: "CATEGORY_SELECT",
     payload: category,
+  });
+};
+
+export const editPayablesList = (list) => (dispatch) => {
+  dispatch({
+    type: "EDIT_PAYABLE",
+    payload: list,
   });
 };

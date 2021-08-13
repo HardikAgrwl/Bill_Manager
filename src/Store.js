@@ -10,8 +10,9 @@ const initialState = {
   selected: [],
   billBeingEdited: {},
   isEdit: false,
-  categories: [...uniqueCategories, "other"],
+  categories: [...uniqueCategories, "Other"],
   selectedCategory: "All",
+  payableBills: [],
 };
 
 const middleWare = [thunk];
@@ -55,10 +56,21 @@ function BillReducer(state, action) {
         ...state,
         monthly_budget: action.payload,
       };
+    case "CLEAR_BUDGET":
+      return {
+        ...state,
+        monthly_budget: 0,
+        payableBills: [],
+      };
     case "CATEGORY_SELECT":
       return {
         ...state,
         selectedCategory: action.payload,
+      };
+    case "EDIT_PAYABLE":
+      return {
+        ...state,
+        payableBills: [...action.payload],
       };
     default:
       return state;
