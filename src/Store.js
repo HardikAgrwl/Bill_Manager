@@ -2,12 +2,16 @@ import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { Bills } from "./Data/Bills";
 
+let uniqueCategories = [...new Set(Bills.map((bill) => bill.category))];
+console.log(uniqueCategories);
+
 const initialState = {
   bills: [...Bills],
   monthly_budget: 0,
   selected: [],
   billBeingEdited: {},
   isEdit: false,
+  categories: [...uniqueCategories],
 };
 
 const middleWare = [thunk];
@@ -45,6 +49,11 @@ function BillReducer(state, action) {
       return {
         ...state,
         bills: [...action.payload],
+      };
+    case "BUDGET_CHANGED":
+      return {
+        ...state,
+        monthly_budget: action.payload,
       };
     default:
       return state;

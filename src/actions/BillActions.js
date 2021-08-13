@@ -38,3 +38,10 @@ export const editDone = (bills) => (dispatch) => {
     payload: bills,
   });
 };
+
+export const changeBudget = (budget) => (dispatch) => {
+  dispatch({
+    type: "BUDGET_CHANGED",
+    payload: budget,
+  });
+};

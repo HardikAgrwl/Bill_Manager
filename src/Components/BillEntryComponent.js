@@ -41,22 +41,16 @@ function BillEnteryComponent({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let dateSplit = bill.date.split("-");
-    let newDate;
-    if (dateSplit[0].length === 4)
-      newDate = dateSplit[1] + "-" + dateSplit[2] + "-" + dateSplit[0];
-    else newDate = bill.date;
     let d = new Date();
     if (isEdit) {
       let newBills = bills.map((b) => {
-        if (b.id === bill.id) return { ...bill, date: newDate };
+        if (b.id === bill.id) return { ...bill };
         else return { ...b };
       });
       editDone(newBills);
     } else {
       let finalBill = {
         ...bill,
-        date: newDate,
         id: d.getTime(),
       };
       addBill(finalBill);
