@@ -1,6 +1,12 @@
-import Button from "@material-ui/core/Button";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { addBill, editDone } from "../actions/BillActions";
@@ -17,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
     width: "15ch",
     padding: "0.5rem",
   },
+  select: {
+    width: "20ch",
+  },
 }));
 
 function BillEnteryComponent({
@@ -25,6 +34,7 @@ function BillEnteryComponent({
   addBill,
   isEdit,
   editDone,
+  categories,
 }) {
   const classes = useStyles();
   const initialBill = {
@@ -39,7 +49,7 @@ function BillEnteryComponent({
     setBill(isEdit ? billBeingEdited : initialBill); //eslint-disable-next-line
   }, [billBeingEdited]);
 
-  const handleSubmit = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     let d = new Date();
     if (isEdit) {
@@ -60,10 +70,11 @@ function BillEnteryComponent({
 
   const changeHandler = (e) => {
     setBill((prevBill) => ({ ...prevBill, [e.target.name]: e.target.value }));
+    console.log(e.target.value, e.target.name);
   };
 
   return (
-    <form className={classes.root} autoComplete>
+    <form className={classes.root} autoComplete onSubmit={submitHandler}>
       <TextField
         id="description"
         required
@@ -73,15 +84,26 @@ function BillEnteryComponent({
         onChange={changeHandler}
         variant="outlined"
       />
-      <TextField
-        id="category"
-        value={bill.category}
-        name="category"
-        onChange={changeHandler}
-        required
-        label="Category"
-        variant="outlined"
-      />
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel id="demo-simple-select-outlined-label">
+          {" "}
+          Category *
+        </InputLabel>
+        <Select
+          className={classes.select}
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
+          value={bill.category}
+          required
+          name="category"
+          onChange={changeHandler}
+          label="category"
+        >
+          {categories.map((category) => {
+            return <MenuItem value={category}>{category}</MenuItem>;
+          })}
+        </Select>
+      </FormControl>
       <TextField
         id="amount"
         required
@@ -101,12 +123,7 @@ function BillEnteryComponent({
         variant="outlined"
         required
       />
-      <Button
-        variant="contained"
-        type="submit"
-        onClick={handleSubmit}
-        className={classes.button}
-      >
+      <Button variant="contained" type="submit" className={classes.button}>
         Submit
       </Button>
     </form>
@@ -117,6 +134,7 @@ const mapStateToProps = (state) => ({
   bills: state.bills,
   billBeingEdited: state.billBeingEdited,
   isEdit: state.isEdit,
+  categories: state.categories,
 });
 
 export default connect(mapStateToProps, { addBill, editDone })(

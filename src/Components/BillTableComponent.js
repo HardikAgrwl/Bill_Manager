@@ -17,10 +17,10 @@ import {
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
-import FilterListIcon from "@material-ui/icons/FilterList";
+// import FilterListIcon from "@material-ui/icons/FilterList";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   clearSelection,
@@ -28,6 +28,7 @@ import {
   editBill,
   selectBill,
 } from "../actions/BillActions";
+import CategoryFilterComponent from "./CategoryFilterComponent";
 
 function descendingComparator(a, b, orderBy) {
   let first = parseInt(a[orderBy]);
@@ -159,6 +160,7 @@ const EnhancedTableToolbar = (props) => {
   const { Bills, selected, deleteBills, clearSelection } = props;
 
   const deleteHandler = () => {
+    console.log(Bills);
     const newBills = Bills.filter((bill) => !selected.includes(bill.id));
     console.log(newBills);
     if (Bills) deleteBills(newBills);
@@ -199,9 +201,7 @@ const EnhancedTableToolbar = (props) => {
         </Tooltip>
       ) : (
         <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
+          <CategoryFilterComponent />
         </Tooltip>
       )}
     </Toolbar>
@@ -243,12 +243,26 @@ const BillTableComponent = ({
   selected,
   clearSelection,
   editBill,
+  selectedCategory,
 }) => {
   const classes = useStyles();
+  const [billList, setBillList] = useState(
+    selectedCategory === "All"
+      ? Bills
+      : Bills.filter((bill) => bill.category === selectedCategory)
+  );
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  useEffect(() => {
+    setBillList(
+      selectedCategory === "All"
+        ? Bills
+        : Bills.filter((bill) => bill.category === selectedCategory)
+    );
+  }, [selectedCategory, Bills]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -258,7 +272,7 @@ const BillTableComponent = ({
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = Bills.map((bill) => bill.id);
+      const newSelecteds = billList.map((bill) => bill.id);
       selectBill(newSelecteds);
       return;
     }
@@ -295,14 +309,14 @@ const BillTableComponent = ({
   };
 
   const editHandler = (event, id) => {
-    const billToBeEdited = Bills.filter((bill) => bill.id === id);
+    const billToBeEdited = billList.filter((bill) => bill.id === id);
     editBill(billToBeEdited[0]);
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, Bills.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, billList.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -327,10 +341,10 @@ const BillTableComponent = ({
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={Bills.length}
+              rowCount={billList.length}
             />
             <TableBody>
-              {stableSort(Bills, getComparator(order, orderBy))
+              {stableSort(billList, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((bill, index) => {
                   const isItemSelected = isSelected(bill.id);
@@ -383,7 +397,7 @@ const BillTableComponent = ({
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={Bills.length}
+          count={billList.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -397,6 +411,7 @@ const BillTableComponent = ({
 const mapStateToProps = (state) => ({
   Bills: state.bills,
   selected: state.selected,
+  selectedCategory: state.selectedCategory,
 });
 
 export default connect(mapStateToProps, {

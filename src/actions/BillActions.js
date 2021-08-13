@@ -45,3 +45,10 @@ export const changeBudget = (budget) => (dispatch) => {
     payload: budget,
   });
 };
+
+export const selectCategory = (category) => (dispatch) => {
+  dispatch({
+    type: "CATEGORY_SELECT",
+    payload: category,
+  });
+};
